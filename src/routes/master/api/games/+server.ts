@@ -53,7 +53,7 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
         }
         
         const data = await res.json();
-        await sleep(5000)
+        // await sleep(5000)
         return json(data);
     } catch (err) {
         if (err instanceof Error && 'status' in err) {

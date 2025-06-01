@@ -5,4 +5,5 @@ export interface Game {
     background: string;
     thumbnail: string;
     challenge_type: string[];
+    isDisabled: boolean;
 }

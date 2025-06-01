@@ -2,9 +2,7 @@
 	import { goto } from '$app/navigation';
 	import ListGamesSkeleton from '$lib/components/ListGames-skeleton.svelte';
 	import type { Game } from '$lib/models/game';
-	import Paginator from '$lib/ui/Paginator.svelte';
 	import SimplePaginator from '$lib/ui/SimplePaginator.svelte';
-	import Spinner from '$lib/ui/Spinner.svelte';
 	import ListGames from '../../../lib/components/ListGames.svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte'
@@ -28,7 +26,10 @@
 			const response =  await fetch(`/master/api/games`, {
 									method: 'POST',
 									body: JSON.stringify({
-										index: currentPage
+										index: currentPage,
+										filters: {
+											isDisabled: true
+										}
 									})
 								});
 			const bucket = await response.json();
@@ -38,7 +39,7 @@
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		} finally {
-			// loading = false;
+			loading = false;
 		}
   	}
 
@@ -49,17 +50,6 @@
 
 </script>
 
-
-<div class="skeleton card w-96 bg-base-100 shadow-xl">
-	<div class="skeleton h-32 w-full"></div>
-	<div class="card-body">
-	  <div class="skeleton h-4 w-full"></div>
-	  <div class="skeleton h-4 w-full"></div>
-	  <div class="skeleton h-4 w-1/2"></div>
-	</div>
-  </div>
-  <div class="skeleton h-32 w-32"></div>
-  <hr/>
 {#if loading}
 	<ListGamesSkeleton />
 	{:else}
